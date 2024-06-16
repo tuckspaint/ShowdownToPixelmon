@@ -10,10 +10,10 @@ const showdownLines = [
     "EVs",
     "Nature",
     "IVs",
-    "Move1",
-    "Move2",
-    "Move3",
-    "Move4",
+    "Move",
+    "Move",
+    "Move",
+    "Move",
     "Empty"
 ]
 
@@ -27,19 +27,26 @@ function makeMaps() {
         }
     })
 
-    
+    fetch("https://raw.githubusercontent.com/tuckspaint/ShowdownToPixelmon/main/natures.txt")
+    .then((res) => res.text())
+    .then((text) => {
+        text = text.split("\n");
+        for (let i = 1; i <= text.length; i++) {
+            natures.set(text[i-1], i);
+        }
+    })
 }
 
 function generateCommands() {
     let lineNum = 0;
     let commands = "";
     let name;
-    let templLn, gender, ndex, nature, ability, heldItem, variant, move1, move2, move3, move4, EVHP, EVAttack, EVDefense, EVSpecialAttack, EVSpecialDefense, EVSpeed, IVHP, IVAttack, IVDefense, IVSpAtt, IVSpDef, IVSpeed;
+    let templLn, gender, ndex, nature, ability, heldItem, variant, move, EVHP, EVAttack, EVDefense, EVSpecialAttack, EVSpecialDefense, EVSpeed, IVHP, IVAttack, IVDefense, IVSpAtt, IVSpDef, IVSpeed;
     let showdown = document.getElementById("showdown").value.split("\n");
 
 
     for (const line of showdown) {  
-        if (line === "" && showdownLines[lineNum % 11] !== "Empty") break ;
+        if (line === "" && showdownLines[lineNum % 11] === "Name") break ;
 
         switch(showdownLines[lineNum % 11]) {
             case "Name":
@@ -53,6 +60,8 @@ function generateCommands() {
                 gender = Math.floor(Math.random() * 2);
 
                 commands += "ndex: "+ndex+", HeldItemStack: {id: \"pixelmon:"+heldItem+"\", Count: 1b}, Variant: \""+variant+"\", Gender: "+gender+"b, ";
+
+                //TODO: VARIANT
                 break;
             case "Ability":
                 ability = line.split("Ability: ")[1].trim();
@@ -62,8 +71,11 @@ function generateCommands() {
                 break;
             case "EVs":
                 EVHP=EVAttack=EVDefense=EVSpecialAttack=EVSpecialDefense=EVSpeed=0;
+                //TODO:
                 break;
             case "Nature":
+                nature = natures.get(line.split(" ")[0])
+                commands += "Nature: "+nature+"b, ";
                 break;
             case "IVs":
                 IVHP=IVAttack=IVDefense=IVSpAtt=IVSpDef=IVSpeed=31;
@@ -71,19 +83,20 @@ function generateCommands() {
                     lineNum = 6;
                     break;
                 }
-            case "Move1":
+                //TODO:
                 break;
-            case "Move2":
-                break;
-            case "Move3":
-                break;
-            case "Move4":
+            case "Move":
+                //TODO: Moveset: []
+                if (line[0] === "") {
+                    lineNum = 10;
+                    break;
+                }
+                move = line.substring(2)
                 break;
             case "Empty":
                 commands += "EVHP: "+EVHP+"s, EVAttack: "+EVAttack+"s, EVDefense: "+EVDefense+"s, EVSpecialAttack: "+EVSpecialAttack+"s, EVSpecialDefense: "+EVSpecialDefense+"s, EVSpeed: "+EVSpeed+"s, ";
-                commands += "Nature: "+nature+"b, ";
                 commands += "IVHP: "+IVHP+"b, IVAttack: "+IVAttack+"b, IVDefense: "+IVDefense+"b, IVSpAtt: "+IVSpAtt+"b, IVSpDef: "+IVSpDef+"b, IVSpeed: "+IVSpeed+"b, ";
-                commands += "Movset: [{MoveID: \""+move1+"\", MovePP: 0b}, {MoveID: \""+move2+"\", MovePP: 0b}, {MoveID: \""+move3+"\", MovePP: 0b}, {MoveID: \""+move4+"\", MovePP: 0b}]}}";
+                //commands += "Movset: [{MoveID: \""+move1+"\", MovePP: 0b}, {MoveID: \""+move2+"\", MovePP: 0b}, {MoveID: \""+move3+"\", MovePP: 0b}, {MoveID: \""+move4+"\", MovePP: 0b}]}}";
                 commands += "<br/><br/><br/><br/>"
                 break;
         }
