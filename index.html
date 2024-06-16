@@ -2,9 +2,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
     <title>Document</title>
 </head>
 <body>
     <h1>Little Cup Command Builder!</h1>
+    <div id="flex">
+        <textarea id="showdown" oninput=generateCommands() rows="1" cols="25" placeholder="Paste your Showdown export here"></textarea>
+        <div id="commands">The Pixelmon commands you need will show up here
+        </div>
+    </div>
 </body>
 </html>
