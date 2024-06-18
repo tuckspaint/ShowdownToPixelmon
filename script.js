@@ -57,22 +57,27 @@ function generateCommands() {
                 tempLn = line.split(" @ ");
                 nameAndVar = tempLn[0].split("-");
                 name = nameAndVar[0].replace(/é/g,"e");
-                console.log(dex)
-                console.log(name)
-                console.log(dex.get("Flabebe"))
                 ndex = dex.get(name);
                 if (tempLn[1]) {heldItem = tempLn[1].trim().replace(/\s/g, "_").replace(/-/g, "_").toLowerCase();}
                 gender = Math.floor(Math.random() * 2);
 
-                commands += "ndex: "+ndex+", Gender: "+gender+"b, ";
+                
 
                 if (heldItem) {
                     commands += "HeldItemStack: {id: \"pixelmon:"+heldItem+"\", Count: 1b}, "
                 }
-
                 if (nameAndVar[1]) {
+                    if (nameAndVar[1].includes("(M)")) {
+                        gender = 0;
+                        nameAndVar[1] = nameAndVar[1].replace("(M)","");
+                    }
+                    if (nameAndVar[1].includes("(F)")) {
+                        gender = 1;
+                        nameAndVar[1] = nameAndVar[1].replace("(F)","");
+                    }
                     nameAndVar[1] = nameAndVar[1].trim();
                 }
+                console.log(nameAndVar)
                 switch(nameAndVar[1]) {
                     case "Alola":
                         variant="alolan"
@@ -91,6 +96,8 @@ function generateCommands() {
                 if (variant) {
                     commands += "Variant: \""+variant+"\", "
                 }
+
+                commands += "ndex: "+ndex+", Gender: "+gender+"b, ";
                 break;
             case "Ability":
                 ability = line.split("Ability: ")[1].trim();
