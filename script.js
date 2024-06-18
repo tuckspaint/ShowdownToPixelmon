@@ -6,6 +6,7 @@ const natures = new Map();
 const showdownLines = [
     "Name",
     "Ability",
+    "Level",
     "Tera",
     "EVs",
     "Nature",
@@ -46,7 +47,8 @@ function generateCommands() {
 
     for (let realLineNum = 0; realLineNum < showdown.length; realLineNum++) {  
         line = showdown[realLineNum]
-        switch(showdownLines[lineNum % 11]) {
+        console.log(showdownLines[lineNum % 12] + ": " + line)
+        switch(showdownLines[lineNum % 12]) {
             case "Name":
                 if (line === "") continue;
                 variant = ""
@@ -91,6 +93,8 @@ function generateCommands() {
             case "Ability":
                 ability = line.split("Ability: ")[1].trim();
                 commands += "Ability: \""+ability+"\", ";
+                break;
+            case "Level":
                 break;
             case "Tera":
                 break;
@@ -141,7 +145,7 @@ function generateCommands() {
                     realLineNum--;
                     break;
                 }
-                if (lineNum % 11 !== 6) {
+                if (lineNum % 12 !== 6) {
                     commands += ", "
                 }
                 move = line.substring(2)
