@@ -47,7 +47,6 @@ function generateCommands() {
 
     for (let realLineNum = 0; realLineNum < showdown.length; realLineNum++) {  
         line = showdown[realLineNum]
-        console.log(showdownLines[lineNum % 12] + ": " + line)
         switch(showdownLines[lineNum % 12]) {
             case "Name":
                 if (line === "") continue;
@@ -57,9 +56,12 @@ function generateCommands() {
 
                 tempLn = line.split(" @ ");
                 nameAndVar = tempLn[0].split("-");
-                name = nameAndVar[0];
+                name = nameAndVar[0].replace(/é/g,"e");
+                console.log(dex)
+                console.log(name)
+                console.log(dex.get("Flabebe"))
                 ndex = dex.get(name);
-                if (tempLn[1]) {heldItem = tempLn[1].trim().replace(" ", "_").replace("-", "_").toLowerCase();}
+                if (tempLn[1]) {heldItem = tempLn[1].trim().replace(/\s/g, "_").replace(/-/g, "_").toLowerCase();}
                 gender = Math.floor(Math.random() * 2);
 
                 commands += "ndex: "+ndex+", Gender: "+gender+"b, ";
