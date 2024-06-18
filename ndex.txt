@@ -779,9 +779,9 @@ Mimikyu
 Bruxish
 Drampa
 Dhelmise
-Jangmo-o
-Hakamo-o
-Kommo-o
+Jangmo
+Hakamo
+Kommo
 Tapu Koko
 Tapu Lele
 Tapu Bulu
