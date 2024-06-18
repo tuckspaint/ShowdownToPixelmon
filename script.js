@@ -32,8 +32,8 @@ function makeMaps() {
     .then((res) => res.text())
     .then((text) => {
         text = text.split("\n");
-        for (let i = 1; i <= text.length; i++) {
-            natures.set(text[i-1], i);
+        for (let i = 0; i < text.length; i++) {
+            natures.set(text[i], i);
         }
     })
 }
@@ -145,10 +145,10 @@ function generateCommands() {
                     realLineNum--;
                     break;
                 }
-                if (lineNum % 12 !== 6) {
+                if (lineNum % 12 !== 7) {
                     commands += ", "
                 }
-                move = line.substring(2)
+                move = line.substring(2).trim()
                 commands += "{MoveID: \""+move+"\", MovePP: 0b}";
                 break;
             case "Empty":
