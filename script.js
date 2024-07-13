@@ -17,7 +17,7 @@ const showdownLines = [
     "Move",
     "Empty"
 ]
-const generless = [
+const genderless = [
     "Voltorb",
     "Staryu",
     "Porygon",
@@ -61,6 +61,7 @@ function generateCommands() {
 
     for (let realLineNum = 0; realLineNum < showdown.length; realLineNum++) {  
         line = showdown[realLineNum]
+        console.log(showdownLines[lineNum % 12], line)
         switch(showdownLines[lineNum % 12]) {
             case "Name":
                 if (line === "") continue;
@@ -70,6 +71,7 @@ function generateCommands() {
                 commands += "pixelmon: {CaughtBall: \"premier_ball\", palette: \"none\", Growth: 7b, originalTrainer:\"Little Cup Competition\", Level: 5, Health: 0, DoesLevel: 0b, Friendship: 255s, ";
                 gender = Math.floor(Math.random() * 2);
                 tempLn = line.split(" @ ");
+                nameAndVar = null
 
                 if (tempLn[0].includes("(M)")) {
                     gender = 0;
@@ -87,6 +89,7 @@ function generateCommands() {
                     nameAndVar = tempLn[0].substring(nameIdx).replace("(","").replace(")","")
                     nickname = tempLn[0].substring(0,nameIdx)
                 }
+                console.log(nameAndVar)
                 nameAndVar = nameAndVar ? nameAndVar.split("-") : tempLn[0].split("-");
                 name = nameAndVar[0].replace(/é/g,"e");
                 ndex = dex.get(name);
@@ -99,7 +102,7 @@ function generateCommands() {
                     commands += "HeldItemStack: {id: \"pixelmon:"+heldItem+"\", Count: 1b}, "
                 }
 
-                if (generless.includes(name)) {
+                if (genderless.includes(name)) {
                     gender = 2;
                 }
 
@@ -179,10 +182,6 @@ function generateCommands() {
                 commands += "Moveset: [";
                 break;
             case "Move":
-                if (line[0] !== "-") {
-                    realLineNum--;
-                    break;
-                }
                 if (lineNum % 12 !== 7) {
                     commands += ", "
                 }
