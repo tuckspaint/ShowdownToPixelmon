@@ -185,7 +185,7 @@ function generateCommands() {
                 if (lineNum % 12 !== 7) {
                     commands += ", "
                 }
-                move = line.substring(2).trim()
+                move = line.trim()
                 commands += "{MoveID: \""+move+"\", MovePP: 0b}";
                 break;
             case "Empty":
